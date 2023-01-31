@@ -10,41 +10,41 @@ module.exports = {
       primaryKey: true,
     },
 
-     homeTeamId: { 
+    home_team_id: { 
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
         model: 'teams',
         key: 'id',
       },
-      field: home_team_id,
-    },
-
-     homeTeamGoals: { 
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      field: home_team_goals,
-    },
-
-     awayTeamId: { 
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'teams',
-        key: 'id',
-      },
-      field: away_team_id,
+      // field: home_team_id,
     },
     
-     homeTeamsGoals: { // atenção para TEAMS no plural diferente do anterior no singular
+    home_team_goals: { 
       type: Sequelize.INTEGER,
       allowNull: false,
-      field: home_teams_goals, // atenção para TEAMS no plural diferente do anterior no singular
+      // field: home_team_goals, 
     },
-    inProgress: { 
+
+    away_team_id: { 
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'teams',
+        key: 'id',
+      },
+      // field: away_team_id,
+    },
+
+    away_team_goals: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    
+    in_progress: { 
       type: Sequelize.BOOLEAN,
       allowNull: false,
-      field: in_progress,
+      // field: in_progress,
     },
   });
   },
