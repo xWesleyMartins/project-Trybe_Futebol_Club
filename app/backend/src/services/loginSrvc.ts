@@ -10,9 +10,10 @@ export default class LoginServc {
     const { email, password } = loginPayload;
     const user = await this.userModel.findOne({ where: { email } });
     const compCryto = user && compareSync(password, user.password);
-    if (compCryto) {
-      const genToken = generateToken(loginPayload);
-      return genToken;
+    if (!compCryto) {
+      return undefined;
     }
+    const genToken = generateToken(loginPayload);
+    return genToken;
   }
 }
