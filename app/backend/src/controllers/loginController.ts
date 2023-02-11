@@ -17,11 +17,6 @@ export default class LoginController {
     return res.status(200).json({ token });
   }
 
-  // public getValidLogin = async (req: Request, res: Response) => {
-  //   const { role } = req.body.user;
-  //   return res.status(200).json({ role });
-  // };
-
   public getValidLogin = async (req: Request, res: Response) => {
     const { userPayload: { role } } = req.body.role;
 
