@@ -1,11 +1,8 @@
 import { Request, Response } from 'express';
-// import User from '../database/models/User';
 import LoginServc from '../services/loginSrvc';
 import loginSchemaJoi from '../validations/joiLoginPassWord';
 
 export default class LoginController {
-  // constructor(private userModel = User) {}
-
   loginServc = new LoginServc();
 
   async loginContr(req: Request, res: Response) {
@@ -19,4 +16,15 @@ export default class LoginController {
     }
     return res.status(200).json({ token });
   }
+
+  // public getValidLogin = async (req: Request, res: Response) => {
+  //   const { role } = req.body.user;
+  //   return res.status(200).json({ role });
+  // };
+
+  public getValidLogin = async (req: Request, res: Response) => {
+    const { userPayload: { role } } = req.body.role;
+
+    return res.status(200).json({ role });
+  };
 }

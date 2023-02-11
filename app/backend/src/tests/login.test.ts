@@ -12,21 +12,20 @@
 
 // const { expect } = chai;
 
-// describe('testando login', () => {
+// describe('Seu teste', () => {
 //   /**
 //    * Exemplo do uso de stubs com tipos
 //    */
 
 //   let chaiHttpResponse: Response;
-// it('', async () => {
-  
-//     sinon.stub(Example, "findOne")
+
+//   before(async () => {
+//     sinon
+//       .stub(Example, "findOne")
 //       .resolves({
 //         ...<Seu mock>
 //       } as Example);
-// })
-//   // before(async () => {
-//   // });
+//   });
 
 //   // after(()=>{
 //   //   (Example.findOne as sinon.SinonStub).restore();

@@ -13,7 +13,9 @@ export default class LoginServc {
     if (!compCryto) {
       return undefined;
     }
-    const genToken = generateToken(loginPayload);
+    const { id, username, role } = user;
+
+    const genToken = generateToken({ id, username, role, email });
     return genToken;
   }
 }
