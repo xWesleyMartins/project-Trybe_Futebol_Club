@@ -16,8 +16,6 @@ export default class MatchesServc {
         attributes: ['teamName'],
       }],
     });
-    console.log(resultFind);
-    
     return resultFind;
   }
 
