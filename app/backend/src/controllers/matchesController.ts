@@ -1,18 +1,16 @@
 import { Request, Response } from 'express';
-// import TeamsServc from '../services/teamsSrvc';
 import MatchesServc from '../services/matchesSrvc';
 
 export default class MatchesController {
   matchesSrvc = new MatchesServc();
 
-  async matchesContr(_req: Request, res: Response) {
+  async matchesContr(req: Request, res: Response) {
     const allMatches = await this.matchesSrvc.findAllMatches();
-    return res.status(200).json(allMatches);
+    const inProgressMatches = req.query.inProgress === 'true';
+    const matchesInProgress = await this.matchesSrvc.findProgressMatches(inProgressMatches);
+    if (req.query.inProgress === undefined) {
+      return res.status(200).json(allMatches);
+    }
+    return res.status(200).json(matchesInProgress);
   }
-
-  // async findTeamsById(req: Request, res: Response) {
-  //   const id = Number(req.params.id);
-  //   const teamById = await this.teamsSrvc.findTeamById(id);
-  //   return res.status(200).json(teamById);
-  // }
 }

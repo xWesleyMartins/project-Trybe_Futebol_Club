@@ -19,8 +19,19 @@ export default class MatchesServc {
     return resultFind;
   }
 
-  // async findTeamById(id: number): Promise<object | null> {
-  //   const findId = await this.teamsModel.findOne({ where: { id } });
-  //   return findId;
-  // }
+  async findProgressMatches(inProgress: boolean): Promise<object | undefined> {
+    const resultFind = await this.matchesModel.findAll({
+      where: { inProgress },
+      include: [{
+        model: Teams,
+        as: 'homeTeam',
+        attributes: ['teamName'],
+      }, {
+        model: Teams,
+        as: 'awayTeam',
+        attributes: ['teamName'],
+      }],
+    });
+    return resultFind;
+  }
 }
