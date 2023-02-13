@@ -10,7 +10,7 @@ const loginSchemaJoi = Joi.object({
   password: Joi
     .string()
     .required()
-    // .min(6)
+    .min(5)
     .messages({ 'any.required': msgNotLoginPass, 'string.empty': msgNotLoginPass }),
 });
 

@@ -1,23 +1,42 @@
-// import * as sinon from 'sinon';
-// import * as chai from 'chai';
-// // @ts-ignore
-// import chaiHttp = require('chai-http');
+import * as sinon from 'sinon';
+import * as chai from 'chai';
+// @ts-ignore
+import chaiHttp = require('chai-http');
 
-// import { app } from '../app';
-// import Example from '../database/models/ExampleModel';
+import { app } from '../app';
+import Example from '../database/models/ExampleModel';
+import Users from '../database/models/User';
+import { userCorrectMock, loginAdminMock, loginPassIncorrectMock } from './mocks/userMock';
+import * as bcrypt from 'bcryptjs';
 
 // import { Response } from 'superagent';
 
-// chai.use(chaiHttp);
+chai.use(chaiHttp);
 
-// const { expect } = chai;
+const { expect } = chai;
 
-// describe('Seu teste', () => {
+describe('Testando /login', () => {
+  // let chaiHttpResponse: Response;
+  it('testa se é possivel fazer login com dados corretos', async () => {
+    sinon.stub(Users, "findOne").resolves({ ...userCorrectMock } as Users);
+    sinon.stub(bcrypt, "compare").resolves(true);
+    const httpResponse = await chai.request(app).post('/login').send(loginAdminMock);
+
+    expect(httpResponse.status).to.be.equal(200);
+    expect(httpResponse.body).to.be.haveOwnProperty('token');
+  })
+
+  it('testa se é possivel fazer login com dados incorretos', async () => {
+    const httpResponse = await chai.request(app).post('/login').send(loginPassIncorrectMock);
+
+    expect(httpResponse.status).to.be.equal(401);
+    expect(httpResponse.text).to.deep.equal('{ "message": "Incorrect email or password" }');
+  })
+})
 //   /**
 //    * Exemplo do uso de stubs com tipos
 //    */
 
-//   let chaiHttpResponse: Response;
 
 //   before(async () => {
 //     sinon
