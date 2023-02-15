@@ -19,16 +19,22 @@ export default class MatchesController {
 
   async saveMatchesContr(req: Request, res: Response) {
     const match = req.body;
+
     const addMatch = await this.matchesSrvc.newMatchSrvc(match);
+    // const team = await this.teamSrvc.findTeamById(match.homeTeamId);
+    // console.log(team);
+
+    // if (!team) {
+    //   return team;
+    //   // return res.status(404).json({ message: 'There is no team with such id!' });
+    // }
+
     return res.status(addMatch.type).json(addMatch.message);
   }
 
-  // async saveMatchesContr(req: Request, res: Response) {
-  //   const payloadNewMatch = req.body;
-  //   const result = await this.matchesSrvc.saveMatches(payloadNewMatch);
-
-  //   console.log('teste controller ->> ', result);
-
-  //   return res.status(201).json(result);
-  // }
+  async updatInprogressMatchesCtrlr(req: Request, res: Response) {
+    const { id } = req.params;
+    await this.matchesSrvc.updatInprogressMatches(id);
+    return res.status(200).json({ message: 'Finished' });
+  }
 }

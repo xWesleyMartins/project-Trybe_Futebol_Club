@@ -44,15 +44,11 @@ export default class MatchesServc {
     return { type: 201, message: { ...addNewMatch.dataValues } };
   };
 
-  // async saveMatches(matchePayLoad: IMatches): Promise<IMatches> {
-  //   const createNewMatch = await this.matchesModel.create({
-  //     homeTeamId: matchePayLoad.homeTeamId,
-  //     homeTeamGoals: matchePayLoad.homeTeamGoals,
-  //     awayTeamId: matchePayLoad.awayTeamId,
-  //     awayTeamGoals: matchePayLoad.awayTeamGoals,
-  //     inProgress: true,
-  //   });
-
-  //   return createNewMatch;
-  // }
+  async updatInprogressMatches(id: string): Promise<object | null> {
+    const updatMatch = await this.matchesModel.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+    return updatMatch;
+  }
 }
