@@ -1,7 +1,11 @@
+import IMatches from '../interfaces/IMatches';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
+import TeamsServc from './teamsSrvc';
 
 export default class MatchesServc {
+  teamSrvc = new TeamsServc();
+
   constructor(private matchesModel = Matches) {}
 
   async findAllMatches(): Promise<object[] | undefined> {
@@ -34,4 +38,21 @@ export default class MatchesServc {
     });
     return resultFind;
   }
+
+  public newMatchSrvc = async (matchePayLoad: IMatches) => {
+    const addNewMatch = await this.matchesModel.create({ ...matchePayLoad, inProgress: true });
+    return { type: 201, message: { ...addNewMatch.dataValues } };
+  };
+
+  // async saveMatches(matchePayLoad: IMatches): Promise<IMatches> {
+  //   const createNewMatch = await this.matchesModel.create({
+  //     homeTeamId: matchePayLoad.homeTeamId,
+  //     homeTeamGoals: matchePayLoad.homeTeamGoals,
+  //     awayTeamId: matchePayLoad.awayTeamId,
+  //     awayTeamGoals: matchePayLoad.awayTeamGoals,
+  //     inProgress: true,
+  //   });
+
+  //   return createNewMatch;
+  // }
 }

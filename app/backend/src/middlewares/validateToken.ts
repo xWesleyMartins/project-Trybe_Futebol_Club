@@ -13,7 +13,7 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
     req.body.role = validToken;
     next();
   } catch (err) {
-    res.status(401).json({ message: 'token invalido' });
+    res.status(401).json({ message: 'Token must be a valid token' });
   }
 };
 
