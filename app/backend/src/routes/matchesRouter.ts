@@ -18,4 +18,8 @@ matchesRouter.patch('/matches/:id/finish', (req, res) => {
   matchesController.updatInprogressMatchesCtrlr(req, res);
 });
 
+matchesRouter.patch('/matches/:id', (req, res) => {
+  matchesController.editMatchCntrlr(req, res);
+});
+
 export default matchesRouter;

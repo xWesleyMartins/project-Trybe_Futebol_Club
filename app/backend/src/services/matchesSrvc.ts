@@ -23,7 +23,7 @@ export default class MatchesServc {
     return resultFind;
   }
 
-  async findProgressMatches(inProgress: boolean): Promise<object | undefined> {
+  async findProgressMatches(inProgress: boolean): Promise<object[]> {
     const resultFind = await this.matchesModel.findAll({
       where: { inProgress },
       include: [{
@@ -50,5 +50,16 @@ export default class MatchesServc {
       { where: { id } },
     );
     return updatMatch;
+  }
+
+  async editMatch(id: string, matchPayLoad: IMatches) {
+    const { homeTeamGoals, awayTeamGoals } = matchPayLoad;
+    await this.matchesModel
+      .update(
+        { homeTeamGoals, awayTeamGoals },
+        { where: { id } },
+      );
+    const resultUpdtMatch = await this.matchesModel.findByPk(id);
+    return resultUpdtMatch;
   }
 }

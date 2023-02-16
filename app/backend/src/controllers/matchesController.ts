@@ -37,4 +37,10 @@ export default class MatchesController {
     await this.matchesSrvc.updatInprogressMatches(id);
     return res.status(200).json({ message: 'Finished' });
   }
+
+  async editMatchCntrlr(req: Request, res: Response) {
+    const { id } = req.params;
+    const resultEdited = await this.matchesSrvc.editMatch(id, req.body);
+    return res.status(200).json(resultEdited);
+  }
 }
