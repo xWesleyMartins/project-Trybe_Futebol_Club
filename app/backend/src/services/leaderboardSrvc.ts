@@ -8,17 +8,6 @@ type Key = 'homeTeamId' | 'awayTeamId';
 
 export default class LeaderboardSrvc {
   teamSrvc = new TeamsServc();
-  // matchesSrvc = new MatchesServc();
-  // private _teams: object[] = [];
-  // private _matches: IMatches[] = [];
-
-  // async getTeams() {
-  //   return this.teamSrvc.findAllTeams();
-  // }
-
-  // async getMatches() {
-  //   return this.matchesSrvc.findProgressMatches(false);
-  // }
 
   static async getResult(str: Key) {
     const teams: ITeam[] = await TeamsServc.findAllTeams();

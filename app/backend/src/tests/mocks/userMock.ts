@@ -11,9 +11,14 @@ export const loginAdminMock = {
   password:'secret_admin'
 }
 
-export const loginPassIncorrectMock = {
+export const loginEmailLess = {
+  email: '',
+  password:'uva123'
+}
+
+export const loginIncorrectPass = {
   email: 'admin@admin.com',
-  password:'uva1'
+  password:'uss'
 }
 
 

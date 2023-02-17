@@ -21,14 +21,6 @@ export default class MatchesController {
     const match = req.body;
 
     const addMatch = await this.matchesSrvc.newMatchSrvc(match);
-    // const team = await this.teamSrvc.findTeamById(match.homeTeamId);
-    // console.log(team);
-
-    // if (!team) {
-    //   return team;
-    //   // return res.status(404).json({ message: 'There is no team with such id!' });
-    // }
-
     return res.status(addMatch.type).json(addMatch.message);
   }
 
