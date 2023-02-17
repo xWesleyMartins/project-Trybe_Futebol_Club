@@ -6,10 +6,10 @@ import TeamsServc from './teamsSrvc';
 export default class MatchesServc {
   teamSrvc = new TeamsServc();
 
-  constructor(private matchesModel = Matches) {}
+  // constructor(private matchesModel = Matches) {}
 
-  async findAllMatches(): Promise<object[] | undefined> {
-    const resultFind = await this.matchesModel.findAll({
+  static async findAllMatches(): Promise<object[] | undefined> {
+    const resultFind = await Matches.findAll({
       include: [{
         model: Teams,
         as: 'homeTeam',
@@ -23,8 +23,8 @@ export default class MatchesServc {
     return resultFind;
   }
 
-  async findProgressMatches(inProgress: boolean): Promise<object[]> {
-    const resultFind = await this.matchesModel.findAll({
+  static async findProgressMatches(inProgress: boolean): Promise<IMatches[]> {
+    const resultFind = await Matches.findAll({
       where: { inProgress },
       include: [{
         model: Teams,
@@ -40,26 +40,26 @@ export default class MatchesServc {
   }
 
   public newMatchSrvc = async (matchePayLoad: IMatches) => {
-    const addNewMatch = await this.matchesModel.create({ ...matchePayLoad, inProgress: true });
+    const addNewMatch = await Matches.create({ ...matchePayLoad, inProgress: true });
     return { type: 201, message: { ...addNewMatch.dataValues } };
   };
 
-  async updatInprogressMatches(id: string): Promise<object | null> {
-    const updatMatch = await this.matchesModel.update(
+  static async updatInprogressMatches(id: string): Promise<object | null> {
+    const updatMatch = await Matches.update(
       { inProgress: false },
       { where: { id } },
     );
     return updatMatch;
   }
 
-  async editMatch(id: string, matchPayLoad: IMatches) {
+  static async editMatch(id: string, matchPayLoad: IMatches) {
     const { homeTeamGoals, awayTeamGoals } = matchPayLoad;
-    await this.matchesModel
+    await Matches
       .update(
         { homeTeamGoals, awayTeamGoals },
         { where: { id } },
       );
-    const resultUpdtMatch = await this.matchesModel.findByPk(id);
+    const resultUpdtMatch = await Matches.findByPk(id);
     return resultUpdtMatch;
   }
 }

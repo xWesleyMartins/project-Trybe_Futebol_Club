@@ -1,15 +1,16 @@
 import Teams from '../database/models/Teams';
+import ITeam from '../interfaces/ITeam';
 
 export default class TeamsServc {
-  constructor(private teamsModel = Teams) {}
+  // constructor(private teamsModel = Teams) {}
 
-  async findAllTeams(): Promise<object[]> {
-    const resultFind = await this.teamsModel.findAll();
+  static async findAllTeams(): Promise<ITeam[]> {
+    const resultFind = await Teams.findAll();
     return resultFind;
   }
 
-  async findTeamById(id: number): Promise<object | null> {
-    const findId = await this.teamsModel.findOne({ where: { id } });
+  static async findTeamById(id: number): Promise<ITeam | null> {
+    const findId = await Teams.findOne({ where: { id } });
     return findId;
   }
 }

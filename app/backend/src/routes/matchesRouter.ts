@@ -7,7 +7,7 @@ const matchesRouter = Router();
 const matchesController = new MatchesController();
 
 matchesRouter.get('/matches', (req, res) => {
-  matchesController.matchesContr(req, res);
+  MatchesController.matchesContr(req, res);
 });
 
 matchesRouter.post('/matches', validateToken, validateMatch, (req, res) => {
@@ -15,11 +15,11 @@ matchesRouter.post('/matches', validateToken, validateMatch, (req, res) => {
 });
 
 matchesRouter.patch('/matches/:id/finish', (req, res) => {
-  matchesController.updatInprogressMatchesCtrlr(req, res);
+  MatchesController.updatInprogressMatchesCtrlr(req, res);
 });
 
 matchesRouter.patch('/matches/:id', (req, res) => {
-  matchesController.editMatchCntrlr(req, res);
+  MatchesController.editMatchCntrlr(req, res);
 });
 
 export default matchesRouter;

@@ -1,25 +1,28 @@
 /* eslint-disable max-lines-per-function */
 import TeamsServc from './teamsSrvc';
 import MatchesServc from './matchesSrvc';
+import ITeam from '../interfaces/ITeam';
+import IMatches from '../interfaces/IMatches';
+import populaLb from '../ultils/populateLB';
 
 export default class LeaderboardSrvc {
   teamSrvc = new TeamsServc();
-  matchesSrvc = new MatchesServc();
-  private _teams: any[] = [];
-  private _matches: any[] = [];
+  // matchesSrvc = new MatchesServc();
+  // private _teams: object[] = [];
+  // private _matches: IMatches[] = [];
 
-  async getTeams() {
-    return this.teamSrvc.findAllTeams();
-  }
+  // async getTeams() {
+  //   return this.teamSrvc.findAllTeams();
+  // }
 
-  async getMatches() {
-    return this.matchesSrvc.findProgressMatches(false);
-  }
+  // async getMatches() {
+  //   return this.matchesSrvc.findProgressMatches(false);
+  // }
 
-  async getResult() {
-    const teams = await this.getTeams();
-    const matches = await this.getMatches();
-    return teams.map((team: any) => {
+  static async getResult() {
+    const teams: ITeam[] = await TeamsServc.findAllTeams();
+    const matches: IMatches[] = await MatchesServc.findProgressMatches(false);
+    return teams.map((team) => {
       const t = {
         name: team.teamName,
         totalPoints: 0,
@@ -32,28 +35,14 @@ export default class LeaderboardSrvc {
         goalsBalance: 0,
         efficiency: 0,
       };
-      matches.forEach((match: any) => {
-        if (team.id === match.homeTeamId) {
-          if (match.homeTeamGoals > match.awayTeamGoals) {
-            t.totalVictories += 1;
-            t.totalPoints += 3;
-          }
-          if (match.homeTeamGoals < match.awayTeamGoals) {
-            t.totalLosses += 1;
-          }
-          if (match.homeTeamGoals === match.awayTeamGoals) {
-            t.totalDraws += 1;
-            t.totalPoints += 1;
-          }
-          t.totalGames += 1;
-          t.goalsFavor += match.homeTeamGoals;
-          t.goalsOwn += match.awayTeamGoals;
-          t.goalsBalance = t.goalsFavor - t.goalsOwn;
-          t.efficiency = Number(((t.totalPoints / (t.totalGames * 3)) * 100).toFixed(2));
-        }
-      });
+      populaLb(team, matches, t);
       return t;
-    }).sort((a, b) => (
+    });
+  }
+
+  static async sortLeaderboard() {
+    const resultSort = await LeaderboardSrvc.getResult();
+    return resultSort.sort((a, b) => (
       b.totalPoints - a.totalPoints
       || b.totalVictories - a.totalVictories
       || b.goalsBalance - a.goalsBalance
