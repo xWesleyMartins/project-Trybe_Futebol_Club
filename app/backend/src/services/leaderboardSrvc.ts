@@ -1,9 +1,8 @@
-/* eslint-disable max-lines-per-function */
 import TeamsServc from './teamsSrvc';
 import MatchesServc from './matchesSrvc';
 import ITeam from '../interfaces/ITeam';
 import IMatches from '../interfaces/IMatches';
-import populaLb from '../ultils/populateLB';
+import { ppltHome } from '../ultils/populateLB';
 
 export default class LeaderboardSrvc {
   teamSrvc = new TeamsServc();
@@ -35,7 +34,7 @@ export default class LeaderboardSrvc {
         goalsBalance: 0,
         efficiency: 0,
       };
-      populaLb(team, matches, t);
+      ppltHome(team, matches, t);
       return t;
     });
   }
