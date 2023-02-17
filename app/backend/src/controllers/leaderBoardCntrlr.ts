@@ -8,8 +8,14 @@ export default class LeaderbordController {
   matchesSrvc = new MatchesServc();
   // leaderboardSrvc = new LeaderboardSrvc();
 
-  static async getTotalMatches(_req: Request, res: Response) {
-    const allTeams = await LeaderboardSrvc.sortLeaderboard();
+  static async getHomeMatches(_req: Request, res: Response) {
+    const allTeams = await LeaderboardSrvc.sortLeaderboard('homeTeamId');
+
+    return res.status(200).json(allTeams);
+  }
+
+  static async getAwayMatches(_req: Request, res: Response) {
+    const allTeams = await LeaderboardSrvc.sortLeaderboard('awayTeamId');
 
     return res.status(200).json(allTeams);
   }

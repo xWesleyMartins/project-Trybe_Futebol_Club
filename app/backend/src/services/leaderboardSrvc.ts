@@ -2,7 +2,9 @@ import TeamsServc from './teamsSrvc';
 import MatchesServc from './matchesSrvc';
 import ITeam from '../interfaces/ITeam';
 import IMatches from '../interfaces/IMatches';
-import { ppltHome } from '../ultils/populateLB';
+import populateLB from '../ultils/populateLB';
+
+type Key = 'homeTeamId' | 'awayTeamId';
 
 export default class LeaderboardSrvc {
   teamSrvc = new TeamsServc();
@@ -18,7 +20,7 @@ export default class LeaderboardSrvc {
   //   return this.matchesSrvc.findProgressMatches(false);
   // }
 
-  static async getResult() {
+  static async getResult(str: Key) {
     const teams: ITeam[] = await TeamsServc.findAllTeams();
     const matches: IMatches[] = await MatchesServc.findProgressMatches(false);
     return teams.map((team) => {
@@ -34,13 +36,13 @@ export default class LeaderboardSrvc {
         goalsBalance: 0,
         efficiency: 0,
       };
-      ppltHome(team, matches, t);
+      populateLB(team, matches, t, str);
       return t;
     });
   }
 
-  static async sortLeaderboard() {
-    const resultSort = await LeaderboardSrvc.getResult();
+  static async sortLeaderboard(str: Key) {
+    const resultSort = await LeaderboardSrvc.getResult(str);
     return resultSort.sort((a, b) => (
       b.totalPoints - a.totalPoints
       || b.totalVictories - a.totalVictories
