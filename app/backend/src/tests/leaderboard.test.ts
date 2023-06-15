@@ -27,7 +27,7 @@ describe('Testando /leaderbord/home', () => {
   })
   afterEach(() => {
     (Matches.create as sinon.SinonStub).restore();
-    // (bcrypt.compare as sinon.SinonStub).restore();
+
   })
   
   it.skip('testa status do /leaderBoard/home', async () => {

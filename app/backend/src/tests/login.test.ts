@@ -14,8 +14,6 @@ import {
  } from './mocks/userMock';
 import * as bcrypt from 'bcryptjs';
 
-// import { Response } from 'superagent';
-
 chai.use(chaiHttp);
 
 const { expect } = chai;
@@ -31,7 +29,6 @@ describe('Testando /login', () => {
     (bcrypt.compare as sinon.SinonStub).restore();
   })
   
-  // let chaiHttpResponse: Response;
   it('testa se é possivel fazer login com dados corretos', async () => {
    
     const httpResponse = await chai.request(app).post('/login').send(loginAdminMock);
